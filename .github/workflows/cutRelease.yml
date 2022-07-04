@@ -1,7 +1,6 @@
 # This is a basic workflow that is manually triggered
 
 name: Cut off release
-if: github.ref == 'refs/heads/main'
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
