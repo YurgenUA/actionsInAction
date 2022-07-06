@@ -39,3 +39,10 @@ jobs:
         fi
         echo "Branch check passed"
         exit 0
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Check package version
+        uses: technote-space/package-version-check-action@v1
+        with:
+          BRANCH_PREFIX: main/
