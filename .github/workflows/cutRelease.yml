@@ -28,9 +28,8 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
-    - name: Branch is main?
+    - name: Examine branch
       run: |
-        env
         myBranch=$GITHUB_REF_NAME
         echo "+++++++ $myBranch"
         if [ $myBranch != "main" ];
