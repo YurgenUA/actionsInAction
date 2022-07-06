@@ -32,7 +32,8 @@ jobs:
       run: |
         env
         myBranch=env.GITHUB_REF_NAME
-        if [[ $myBranch != 'main' ]]
+        echo "+++++++ $myBranch"
+        if [ $myBranch != 'main' ];
         then
           echo 'not main branch'
           exit 1
