@@ -28,5 +28,14 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
-    - name: Debug
-      run: env
+    - name: Examine branch
+      run: |
+        myBranch=$GITHUB_REF_NAME
+        echo "+++++++ $myBranch"
+        if [ $myBranch != "main" ];
+        then
+          echo "Can only run on 'main' branch"
+          exit 1
+        fi
+        echo "Branch check passed"
+        exit 0
