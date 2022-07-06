@@ -31,7 +31,8 @@ jobs:
     - name: Debug
       run: |
         env
-        if [[ env.GITHUB_REF_NAME -ne 'main' ]]
+        myBranch=env.GITHUB_REF_NAME
+        if [[ $myBranch != 'main' ]]
         then
           echo 'not main branch'
           exit 1
