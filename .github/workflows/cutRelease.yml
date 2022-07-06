@@ -31,7 +31,7 @@ jobs:
     - name: Debug
       run: |
         env
-        myBranch=env.GITHUB_REF_NAME
+        myBranch=$GITHUB_REF_NAME
         echo "+++++++ $myBranch"
         if [ $myBranch != 'main' ];
         then
