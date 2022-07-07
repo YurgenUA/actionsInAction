@@ -1,35 +1,18 @@
-# This is a basic workflow that is manually triggered
+name: Cut off release (main->release/X.X.X)
 
-name: Cut off release
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  greet:
+  invoke:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
     - name: Examine branch
       run: |
         myBranch=$GITHUB_REF_NAME
-        echo "+++++++ $myBranch"
         if [ $myBranch != "main" ];
         then
           echo "Can only run on 'main' branch"
@@ -86,30 +69,3 @@ jobs:
         echo "@@@  $DESIRED_BRANCH"
         
         git push --set-upstream origin $DESIRED_BRANCH
-
-    # - name: Push as new release branch
-    #   uses: s0/git-publish-subdir-action@develop
-    #   env:
-    #     REPO: self
-    #     BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
-    #     FOLDER: $GITHUB_WORKSPACE
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # - name: Create Release branch
-    #   id: create_release_branch
-    #   uses: peterjgrainger/action-create-branch@v2.2.0
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     branch: 'release/${{ steps.bump_version.outputs.next-version }}'
-
-    # - name: Check branch creation result
-    #   run: |
-    #     if [ ${{ steps.create_release_branch.outputs.created }} == true ];
-    #     then
-    #       echo "New release branch 'release/${{ steps.bump_version.outputs.next-version }}' created."
-    #       exit 0
-    #     fi
-    #     echo "Failed to create release branch 'release/${{ steps.bump_version.outputs.next-version }}'. Please check if it's already exist."
-    #     exit 1
-
