@@ -72,7 +72,7 @@ jobs:
       env:
         REPO: self
         BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
-        FOLDER: /
+        FOLDER: $GITHUB_WORKSPACE
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # - name: Create Release branch
