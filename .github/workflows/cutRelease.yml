@@ -51,6 +51,15 @@ jobs:
     - name: Print version
       run: echo ${{ steps.extract_version.outputs.version }}
 
+    - name: Bump release version
+      id: bump_version
+      uses: christian-draeger/increment-semantic-version@1.0.2
+      with:
+        current-version: '$ {{ steps.extract_version.outputs.version }}'
+        version-fragment: 'feature'
+    - name: Do something with your bumped release version
+      run: echo ${{ steps.bump_version.outputs.next-version }}
+  
     # - name: Check package version
     #     uses: technote-space/package-version-check-action@v1
     #     with:
