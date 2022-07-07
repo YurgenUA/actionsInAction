@@ -59,17 +59,18 @@ jobs:
         current-version: ${{ steps.extract_version.outputs.version }}
         version-fragment: 'feature'
     - name: Switch to new branch if it's not exist yet
+      env:
+        DESIRED_BRANCH:'release/${{ steps.bump_version.outputs.next-version }}'
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
-        desiredBranch='release/${{ steps.bump_version.outputs.next-version }}'
-        existInRemote=$(git ls-remote --heads origin ${desiredBranch})
+        existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
         if [[ -z ${existInRemote} ]]; then
-            echo "Branch '${desiredBranch}' not exists yet"
+            echo "Branch '$DESIRED_BRANCH' not exists yet"
         else
-            echo "Branch '${desiredBranch}' already exists. PLease remove it and restart workflow"
+            echo "Branch '$DESIRED_BRANCH' already exists. PLease remove it and restart workflow"
             exit 1
         fi
-        git checkout -b ${desiredBranch}
+        git checkout -b $DESIRED_BRANCH
   
     - name: Update version in package.json
       uses: jossef/action-set-json-field@v2
@@ -82,7 +83,7 @@ jobs:
       run: |
         git add --all
         git commit -m "bump version to '${{ steps.bump_version.outputs.next-version }}'"
-        git push
+        git push --set-upstream origin
 
     # - name: Push as new release branch
     #   uses: s0/git-publish-subdir-action@develop
