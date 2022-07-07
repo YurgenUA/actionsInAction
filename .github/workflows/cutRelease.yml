@@ -58,8 +58,8 @@ jobs:
         version-fragment: 'feature'
     - name: Switch to new branch if it's not exist yet
       id: new_branch
-      outputs:
-          desiredBranch: ${{ steps.step1.outputs.test }}      
+      env:
+        DESIRED_BRANCH: release/${{ steps.bump_version.outputs.next-version }}
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
         existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
