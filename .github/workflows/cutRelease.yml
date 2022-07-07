@@ -18,11 +18,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
   greet:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
@@ -60,8 +58,6 @@ jobs:
         version-fragment: 'feature'
     - name: Switch to new branch if it's not exist yet
       id: new_branch
-      env:
-        DESIRED_BRANCH: release/${{ steps.bump_version.outputs.next-version }}
       outputs:
           desiredBranch: ${{ steps.step1.outputs.test }}      
       run: |
