@@ -81,7 +81,8 @@ jobs:
     - name: Commit to local git branch
       run: |
         git add --all
-        git commit -m "Bump version to '${{ steps.bump_version.outputs.next-version }}'" 
+        git commit -m "bump version to '${{ steps.bump_version.outputs.next-version }}'"
+        git push
 
     # - name: Push as new release branch
     #   uses: s0/git-publish-subdir-action@develop
