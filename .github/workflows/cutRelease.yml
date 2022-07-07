@@ -58,7 +58,9 @@ jobs:
         current-version: ${{ steps.extract_version.outputs.version }}
         version-fragment: 'feature'
     - name: Do something with your bumped release version
-      run: echo ${{ steps.bump_version.outputs.next-version }}
+      run: |
+        echo ${{ steps.bump_version.outputs.next-version }}
+        git checkout -b 'release/${{ steps.bump_version.outputs.next-version }}'
   
     - name: Update version in package.json
       uses: jossef/action-set-json-field@v2
@@ -67,13 +69,13 @@ jobs:
         field: version
         value: ${{ steps.bump_version.outputs.next-version }}
 
-    - name: Push as new release branch
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
-        FOLDER: $GITHUB_WORKSPACE
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Push as new release branch
+    #   uses: s0/git-publish-subdir-action@develop
+    #   env:
+    #     REPO: self
+    #     BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
+    #     FOLDER: $GITHUB_WORKSPACE
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # - name: Create Release branch
     #   id: create_release_branch
