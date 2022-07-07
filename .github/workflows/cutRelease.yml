@@ -59,6 +59,7 @@ jobs:
         current-version: ${{ steps.extract_version.outputs.version }}
         version-fragment: 'feature'
     - name: Switch to new branch if it's not exist yet
+      id: new_branch
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
         existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
@@ -83,7 +84,7 @@ jobs:
       run: |
         git add --all
         git commit -m "bump version to '${{ steps.bump_version.outputs.next-version }}'"
-        git push --set-upstream origin
+        git push --set-upstream origin ${{ steps.new_branch.DESIRED_BRANCH }}
 
     # - name: Push as new release branch
     #   uses: s0/git-publish-subdir-action@develop
