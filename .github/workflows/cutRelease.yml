@@ -79,7 +79,7 @@ jobs:
 
     - name: Commit to local git branch
       run: |
-        git add -a
+        git add --all
         git commit -m "Bump version to '${{ steps.bump_version.outputs.next-version }}'" 
 
     # - name: Push as new release branch
