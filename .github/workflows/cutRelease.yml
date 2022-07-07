@@ -77,7 +77,7 @@ jobs:
 
     - name: Check branch creation result
       run: |
-        if [ ${{ steps.create_release_branch.outputs.created }} == false ];
+        if [ ${{ steps.create_release_branch.outputs.created }} == true ];
         then
           echo "New release branch 'release/${{ steps.bump_version.outputs.next-version }}' created."
           exit 0
