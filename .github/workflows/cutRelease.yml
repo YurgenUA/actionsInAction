@@ -44,12 +44,12 @@ jobs:
       with:
         ref: main
 
-    - name: Read package.json
-      uses: dutscher/read-package-json-endpoint-actions@v1.33.7
-      id: package-json-endpoint
-
-    - name: Show version number
-      run: echo "${{ steps.package-json-endpoint.outputs.endpoint }}"    
+    - name: Extract version
+      id: extract_version
+      uses: Saionaro/extract-package-version@v1.0.6
+      # From now you can access the version
+    - name: Print version
+      run: echo ${{ steps.extract_version.outputs.version }}
 
     # - name: Check package version
     #     uses: technote-space/package-version-check-action@v1
