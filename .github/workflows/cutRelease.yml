@@ -57,7 +57,7 @@ jobs:
       with:
         current-version: ${{ steps.extract_version.outputs.version }}
         version-fragment: 'feature'
-    - name: Do something with your bumped release version
+    - name: Switch to new branch if it's not exist yet
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
         desiredBranch='release/${{ steps.bump_version.outputs.next-version }}'
@@ -76,6 +76,11 @@ jobs:
         file: package.json
         field: version
         value: ${{ steps.bump_version.outputs.next-version }}
+
+    - name: Commit to local git branch
+      run: |
+        git add -a
+        git commit -m "Bump version to '${{ steps.bump_version.outputs.next-version }}'" 
 
     # - name: Push as new release branch
     #   uses: s0/git-publish-subdir-action@develop
