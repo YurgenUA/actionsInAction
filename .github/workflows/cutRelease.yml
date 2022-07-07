@@ -73,7 +73,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #        RELEASE_BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
       with:
-        branch: 'release/${{ steps.bump_version.outputs.next-version }}''
+        branch: 'release/${{ steps.bump_version.outputs.next-version }}'
 
     # - name: Check package version
     #     uses: technote-space/package-version-check-action@v1
