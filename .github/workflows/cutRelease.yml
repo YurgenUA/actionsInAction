@@ -84,6 +84,7 @@ jobs:
       run: |
         git add --all
         git commit -m "bump version to '${{ steps.bump_version.outputs.next-version }}'"
+        echo "####  ${{ steps.new_branch.DESIRED_BRANCH }}"
         git push --set-upstream origin ${{ steps.new_branch.DESIRED_BRANCH }}
 
     # - name: Push as new release branch
