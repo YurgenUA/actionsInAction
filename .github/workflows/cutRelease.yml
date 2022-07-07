@@ -68,14 +68,20 @@ jobs:
         value: ${{ steps.bump_version.outputs.next-version }}
 
     - name: Create Release branch
+      id: create_release_branch
       uses: peterjgrainger/action-create-branch@v2.2.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        RELEASE_BRANCH: 'release/${{ steps.bump_version.outputs.next-version }}'
       with:
         branch: 'release/${{ steps.bump_version.outputs.next-version }}'
 
-    # - name: Check package version
-    #     uses: technote-space/package-version-check-action@v1
-    #     with:
-    #       BRANCH_PREFIX: main/
+    - name: Check branch creation result
+      run: |
+        if [ ${{ steps.create_release_branch.outputs.created }} ];
+        then
+          echo "New release branch 'release/${{ steps.bump_version.outputs.next-version }}' created."
+          exit 0
+        fi
+        echo "Failed to create release branch 'release/${{ steps.bump_version.outputs.next-version }}'. Please check if it's already exists."
+        exit 1
+
