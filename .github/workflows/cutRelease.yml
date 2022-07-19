@@ -39,7 +39,7 @@ jobs:
     - name: Switch to new branch if it's not exist yet
       id: new_branch
       env:
-        DESIRED_BRANCH: release/${{DESIRED_VERSION}}
+        DESIRED_BRANCH: release/${{$DESIRED_VERSION}}
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
         existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
