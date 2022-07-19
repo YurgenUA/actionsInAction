@@ -23,7 +23,7 @@ jobs:
       with:
         ref: main
 
-#    - uses: fregante/setup-git-user@v1
+    - uses: fregante/setup-git-user@v1
 
     - name: Bump version
       uses: actions/setup-node@v3
