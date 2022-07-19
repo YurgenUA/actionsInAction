@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/YurgenUA/actionsInAction/issues"
   },
-  "homepage": "https://github.com/YurgenUA/actionsInAction#readme"
+  "homepage": "https://github.com/YurgenUA/actionsInAction#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
