@@ -57,8 +57,9 @@ jobs:
     #     field: version
     #     value: ${{ steps.bump_version.outputs.next-version }}
 
-    # - name: Commit to local git branch
-    #   run: |
-    #     git add --all
-    #     git commit -m "bump version to '${{ steps.bump_version.outputs.next-version }}'"
-    #     git push --set-upstream origin $DESIRED_BRANCH
+    - name: Bump varsion and commit to git branch
+      run: |
+        npm version minor
+        git add --all
+        git commit -m "bump version to '$DESIRED_VERSION'"
+        git push --set-upstream origin $DESIRED_BRANCH
