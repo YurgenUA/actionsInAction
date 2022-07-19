@@ -33,7 +33,6 @@ jobs:
         npm version minor
         echo "DESIRED_VERSION=$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
         echo "DESIRED_BRANCH=release/$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
-        git checkout .
     - run: |
         echo "desired:$DESIRED_VERSION"
 
@@ -57,9 +56,6 @@ jobs:
     #     field: version
     #     value: ${{ steps.bump_version.outputs.next-version }}
 
-    - name: Bump varsion and commit to git branch
+    - name: Bump version and commit to git branch
       run: |
-        npm version minor
-        git add --all
-        git commit -m "bump version to '$DESIRED_VERSION'"
         git push --set-upstream origin $DESIRED_BRANCH
