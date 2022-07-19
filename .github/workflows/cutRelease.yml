@@ -33,18 +33,15 @@ jobs:
         npm version minor
         echo "DESIRED_VERSION=$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
         echo "DESIRED_BRANCH=release/$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
-    - run: |
-        echo "desired:$DESIRED_VERSION"
 
     - name: Switch to new branch if doesn't exist yet
-      id: new_branch
       run: |
         echo ${{ steps.bump_version.outputs.next-version }}
         existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
         if [[ -z ${existInRemote} ]]; then
             echo "Branch '$DESIRED_BRANCH' not exists yet"
         else
-            echo "Branch '$DESIRED_BRANCH' already exists. PLease remove it and restart workflow"
+            echo "Branch '$DESIRED_BRANCH' already exists. Please remove it and restart workflow"
             exit 1
         fi
         git checkout -b $DESIRED_BRANCH
