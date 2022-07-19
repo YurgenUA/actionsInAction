@@ -32,40 +32,25 @@ jobs:
     - run: |
         npm version minor
         echo "DESIRED_VERSION=$(npm run env | grep npm_package_version | cut -d '=' -f 2)" >> $GITHUB_ENV
-        echo "desired:$DESIRED_VERSION"
+        git checkout .
     - run: |
         echo "desired:$DESIRED_VERSION"
-    #  npm run env | grep npm_package_version | cut -d '=' -f 2
 
-    # - name: Extract version
-    #   id: extract_version
-    #   uses: Saionaro/extract-package-version@v1.0.6
-
-    # - name: Print original version
-    #   run: echo ${{ steps.extract_version.outputs.version }}
-
-    # - name: Bump release version
-    #   id: bump_version
-    #   uses: christian-draeger/increment-semantic-version@1.0.2
-    #   with:
-    #     current-version: ${{ steps.extract_version.outputs.version }}
-    #     version-fragment: 'feature'
-    
-    # - name: Switch to new branch if it's not exist yet
-    #   id: new_branch
-    #   env:
-    #     DESIRED_BRANCH: release/${{ steps.bump_version.outputs.next-version }}
-    #   run: |
-    #     echo ${{ steps.bump_version.outputs.next-version }}
-    #     existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
-    #     if [[ -z ${existInRemote} ]]; then
-    #         echo "Branch '$DESIRED_BRANCH' not exists yet"
-    #     else
-    #         echo "Branch '$DESIRED_BRANCH' already exists. PLease remove it and restart workflow"
-    #         exit 1
-    #     fi
-    #     git checkout -b $DESIRED_BRANCH
-    #     echo "DESIRED_BRANCH=$DESIRED_BRANCH" >> $GITHUB_ENV        
+    - name: Switch to new branch if it's not exist yet
+      id: new_branch
+      env:
+        DESIRED_BRANCH: release/$DESIRED_VERSION
+      run: |
+        echo ${{ steps.bump_version.outputs.next-version }}
+        existInRemote=$(git ls-remote --heads origin $DESIRED_BRANCH)
+        if [[ -z ${existInRemote} ]]; then
+            echo "Branch '$DESIRED_BRANCH' not exists yet"
+        else
+            echo "Branch '$DESIRED_BRANCH' already exists. PLease remove it and restart workflow"
+            exit 1
+        fi
+        git checkout -b $DESIRED_BRANCH
+        echo "DESIRED_BRANCH=$DESIRED_BRANCH" >> $GITHUB_ENV        
     
     # - name: Update version in package.json
     #   uses: jossef/action-set-json-field@v2
