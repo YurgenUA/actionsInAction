@@ -25,6 +25,12 @@ jobs:
 
     - uses: fregante/setup-git-user@v1
 
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+      run: npm version minor
+
     - name: Extract version
       id: extract_version
       uses: Saionaro/extract-package-version@v1.0.6
