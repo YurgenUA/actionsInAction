@@ -30,9 +30,9 @@ jobs:
       with:
         node-version: 16.x
     - run: |
-      npm version minor
-      echo "DESIRED_VERSION=npm run env | grep npm_package_version | cut -d '=' -f 2" >> $GITHUB_ENV
-      echo "desired:$DESIRED_VERSION"
+        npm version minor
+        echo "DESIRED_VERSION=npm run env | grep npm_package_version | cut -d '=' -f 2" >> $GITHUB_ENV
+        echo "desired:$DESIRED_VERSION"
     #  npm run env | grep npm_package_version | cut -d '=' -f 2
 
     # - name: Extract version
